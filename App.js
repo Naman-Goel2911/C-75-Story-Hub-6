@@ -1,14 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {createBottomTabNavigator} from  'react-navigation-tabs';
+import {createAppContainer} from 'react-navigation';
+import {Header} from 'react-native-elements';
+import ReadStoryScreen from './screens';
+import WriteStoryScreen from './screens';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+  render()
+  {
+    return (
+      <View style={styles.container}>
+        <Header 
+        backgroundColor={'#9c8210'}
+        centerComponent={{
+        text: 'Story Hub',
+        style: { color: '#fff', fontSize: 20 },
+        }}/>
+        <AppContainer />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -19,3 +31,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const TabNavigator = createBottomTabNavigator({
+  Reading: {screen: ReadStoryScreen},
+  Writing: {screen: WriteStoryScreen}
+})
+
+const AppContainer = createAppContainer(TabNavigator)
