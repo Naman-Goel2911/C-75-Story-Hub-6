@@ -1,13 +1,73 @@
 import * as React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {Header} from 'react-native-elements';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default class WriteStoryScreen extends React.Component{
+    constructor()
+    {
+        super();
+        this.state = {
+            title: '',
+            author: '',
+            story: ''
+        }
+    }
+
     render()
     {
         return(
-            <View style = {styles.container}>
-
-            </View>
+            <SafeAreaProvider>
+                <View>
+                    <Header
+                    backgroundColor = {'#9c8210'}
+                    centerComponent = {{
+                        text: 'Write Story',
+                        style: { color: '#fff', fontSize: 20 },
+                    }}
+                    />
+                    <View>
+                        <TextInput
+                        style = {styles.inputBox}
+                        placeholder = "Title of the Story"
+                        onChangeText = {(text)=>{
+                            this.setState({
+                                title: text
+                            })
+                        }}
+                        value = {this.state.title} 
+                        />
+                    </View>
+                    <View>
+                        <TextInput
+                        style = {styles.inputBox}
+                        placeholder = "Author of the Story"
+                        onChangeText = {(text)=>{
+                            this.setState({
+                                author: text
+                            })
+                        }}
+                        value = {this.state.author} 
+                        />
+                    </View>
+                    <View>
+                    <TextInput
+                        style = {styles.inputBox}
+                        placeholder = "The Story"
+                        onChangeText = {(text)=>{
+                        this.setState({
+                        story: text
+                            })
+                        }}
+                        value = {this.state.story} 
+                        multiline = {true}
+                    />
+                    </View>
+                    <TouchableOpacity style = {styles.submitButton}>
+                        <Text style = {styles.submitButtonText}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaProvider>                
         )
     }
 }
@@ -18,5 +78,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    inputBox: {
+        width: 200,
+        height: 40,
+        borderWidth: 2,
+        borderRightWidth: 0,
+        fontSize: 20,
+        margin: 10,
+        marginTop: 20,
+        alignSelf: 'center'
+    },
+    submitButton: {
+        backgroundColor: "yellow",
+        width: 100,
+        height: 50,
+        alignSelf: 'center'
+    },
+    submitButtonText: {
+        padding: 10,
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+    },
 })

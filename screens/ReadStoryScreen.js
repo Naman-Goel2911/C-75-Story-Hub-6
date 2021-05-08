@@ -6,7 +6,7 @@ export default class ReadStoryScreen extends React.Component{
     {
         return(
             <View style = {styles.container}>
-
+                <Text>Read Story</Text>
             </View>
         )
     }
