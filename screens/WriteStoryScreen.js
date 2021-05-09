@@ -2,6 +2,7 @@ import * as React from 'react';
 import {StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Header} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import db from '../config'
 
 export default class WriteStoryScreen extends React.Component{
     constructor()
@@ -12,6 +13,20 @@ export default class WriteStoryScreen extends React.Component{
             author: '',
             story: ''
         }
+    }
+
+    submitStory = async () => {
+        db.collection("stories").doc('story1').update({
+            author: this.state.author,
+            title: this.state.title,
+            theStory: this.state.story
+        })
+
+        this.setState({
+            title: '',
+            author: '',
+            story: ''
+        })
     }
 
     render()
@@ -63,7 +78,12 @@ export default class WriteStoryScreen extends React.Component{
                         multiline = {true}
                     />
                     </View>
-                    <TouchableOpacity style = {styles.submitButton}>
+                    <TouchableOpacity 
+                    style = {styles.submitButton}
+                    onPress = {() => {
+                        this.submitStory();
+                    }}
+                    >
                         <Text style = {styles.submitButtonText}>Submit</Text>
                     </TouchableOpacity>
                 </View>
