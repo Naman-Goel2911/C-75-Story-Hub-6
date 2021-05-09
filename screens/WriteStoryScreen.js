@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import {Header} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import db from '../config'
@@ -22,6 +22,8 @@ export default class WriteStoryScreen extends React.Component{
             theStory: this.state.story
         })
 
+        alert("Your story has been submitted")
+
         this.setState({
             title: '',
             author: '',
@@ -33,7 +35,7 @@ export default class WriteStoryScreen extends React.Component{
     {
         return(
             <SafeAreaProvider>
-                <View>
+                <KeyboardAvoidingView  behavior = "padding" enabled>
                     <Header
                     backgroundColor = {'#9c8210'}
                     centerComponent = {{
@@ -86,19 +88,13 @@ export default class WriteStoryScreen extends React.Component{
                     >
                         <Text style = {styles.submitButtonText}>Submit</Text>
                     </TouchableOpacity>
-                </View>
+                </KeyboardAvoidingView>
             </SafeAreaProvider>                
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     inputBox: {
         width: 200,
         height: 40,
