@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import {createBottomTabNavigator} from  'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
-import {Header} from 'react-native-elements';
+import {Headerar} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import ReadStoryScreen from './screens/ReadStoryScreen';
 import WriteStoryScreen from './screens/WriteStoryScreen';
