@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import {Header, SearchBar} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import db from '../config'
@@ -14,6 +14,26 @@ export default class ReadStoryScreen extends React.Component{
             allStories: [],
             lastVisibleStory: null
         }
+    }
+
+    fetchMoreTransactions = async () => {
+        var enteredText = this.state.searchedText;
+        
+            const transactions = await db.collection('stories').where("author", "==", enteredText).get();
+            transactions.docs.map((doc)=>{
+                this.setState({
+                    allStories: [...this.state.allStories, doc.data()],
+                    lastVisibleStory: doc
+                })
+            })
+
+            const transaction = await db.collection('stories').where("title", "==", enteredText).get();
+            transaction.docs.map((doc)=>{
+                this.setState({
+                    allStories: [...this.state.allStories, doc.data()],
+                    lastVisibleStory: doc
+                })
+            })
     }
 
     searchTransaction = async (text) => {
@@ -72,17 +92,20 @@ export default class ReadStoryScreen extends React.Component{
                     </TouchableOpacity>
 
                     <View>
-                        <ScrollView>
-                            {this.state.allStories.map((story, index)=> {
-                               return(
-                                   <View key = {index} style = {{borderBottomWidth: 2}}>
-                                       <Text> {"Author: " + story.author} </Text>
-                                       <Text> {"Title: " + story.title} </Text>
-                                   </View>
-                               ) 
-                            })
-                            }
-                        </ScrollView>
+                        <FlatList 
+                        data = {this.state.allStories}
+                        renderItem = {({item})=>(
+                            <View style = {{borderBottomWidth: 2, }}>
+                                <Text>{"Author: "+item.author}</Text>
+                                <Text>{"Title: "+item.title}</Text>
+                            </View>
+                        )}
+                        keyExtractor = {(item, index) => {
+                            index.toString();
+                        }}
+                        onEndReached = {this.fetchMoreStories}
+                        onEndReachedThreshold = {0.7}
+                        />
                     </View>
                 </View>
             </SafeAreaProvider>
