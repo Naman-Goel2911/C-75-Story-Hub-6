@@ -16,7 +16,7 @@ export default class WriteStoryScreen extends React.Component{
     }
 
     submitStory = async () => {
-        db.collection("stories").doc('story1').update({
+        db.collection("stories").add({
             author: this.state.author,
             title: this.state.title,
             theStory: this.state.story
